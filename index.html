@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kantor Live</title>
+<style>
+:root{--bg:#0f0f0f;--node:#1b1b1b;--text:#f5f5f5;--line:#94a3b8;--wait:#8B7CFF;--work:#FBBF24;--done:#4ADE80;--fail:#FF4D6D}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Ink Free","Segoe Print",cursive}
+body{display:flex;flex-direction:column;align-items:center;padding:10px 12px 24px}h1{font-size:1.35rem;font-weight:400;color:var(--wait);margin:6px 0 2px}#info{font-size:.82rem;opacity:.75;text-align:center;min-height:1.3em;margin-bottom:10px}
+main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:0}.node{background:var(--node);border:1px solid var(--wait);border-radius:12px;padding:10px 12px;text-align:center;min-width:0}.boss{width:min(100%,300px);border-radius:28px}.hermes{width:min(100%,360px);border-radius:14px}.role{transition:border-color .35s,color .35s;line-height:1.3}.role .name{font-size:1rem}.role .state{font-size:.88rem;margin-top:2px}.role .meta{font-size:.76rem;opacity:.76;margin-top:2px;min-height:1em}
+.role.menunggu{border-color:var(--wait)}.role.bekerja{border:2px solid var(--work);color:var(--work);animation:pulse 1.4s ease-in-out infinite}.role.selesai{border-color:var(--done);color:var(--done)}.role.gagal{border:2px solid var(--fail);color:var(--fail)}.role.tidak-ada{border-style:dashed;color:#aaa;opacity:.64}
+.arrow{color:var(--line);font-size:1.2rem;line-height:1;padding:3px 0}.branch-label,.flow-label{font-size:.78rem;color:#c5c5c5;text-align:center;margin:2px 0 6px}.teams{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:start}.team{border:1px solid #403a58;border-radius:12px;padding:9px;display:flex;flex-direction:column;gap:8px;min-width:0}.team>.role{width:100%}.team .role{padding:8px}.sub{display:flex;flex-direction:column;gap:7px}.sub .role .name{font-size:.9rem}.vacant{border:1px dashed var(--wait);border-radius:10px;color:#aaa;opacity:.62;text-align:center;padding:8px;font-size:.82rem;line-height:1.25}
+.collect{width:100%;border-top:1px solid var(--line);height:22px;margin:9px 0 0;position:relative}.collect:after{content:"↓";position:absolute;top:0;left:50%;transform:translate(-50%,-2px);color:var(--line);background:var(--bg);padding:0 5px}.outputs{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.output{min-height:84px;display:flex;flex-direction:column;justify-content:center;gap:5px}.queue{border-color:var(--done)}.queue.pending{border-color:var(--work);color:var(--work)}.queue.unknown{border-color:var(--wait)}.queue .count{font-size:.88rem}.queue .return{font-size:.76rem;color:var(--text);opacity:.82}.closed main{opacity:.38;filter:grayscale(.55)}#log{font-size:.75rem;opacity:.7;list-style:none;padding:0;margin:10px 12px 0;text-align:center}#log li{margin:2px 0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 #FBBF2433}50%{box-shadow:0 0 10px 2px #FBBF2433}}
+@media(max-width:560px){body{padding-left:10px;padding-right:10px}.teams{width:100%;min-width:0;grid-template-columns:minmax(0,1fr);gap:8px}.team{width:100%;min-width:0;padding:8px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}.team>.role{grid-column:1/-1}.sub{display:contents}.sub>*{min-width:0}.hermes{width:100%}.vacant{font-size:.78rem;padding:7px}.outputs{gap:8px}.output{padding:9px 7px;min-height:78px}.role .name{font-size:.95rem}}
+@media(prefers-reduced-motion:reduce){.role.bekerja{animation:none}}
+</style>
+</head>
+<body>
+<h1>Kantor Live</h1><div id="info">memuat...</div>
+<main id="kantor">
+  <div class="node boss">Boss · pendiri / CEO</div>
+  <div class="arrow" aria-hidden="true">↓</div>
+  <div class="node role hermes" data-role="CEO"><div class="name">Hermes · CEO magang · tahap 2</div><div class="state">memuat…</div><div class="meta"></div></div>
+  <div class="arrow" aria-hidden="true">↓</div><div class="branch-label">mengoordinasikan tim</div>
+  <section class="teams" aria-label="Tim perusahaan">
+    <div class="team">
+      <div class="node role" data-role="CTO"><div class="name">CTO</div><div class="state">memuat…</div><div class="meta"></div></div>
+      <div class="sub">
+        <div class="node role" data-role="Codex"><div class="name">Codex · pentest / tugas ringan</div><div class="state">memuat…</div><div class="meta"></div></div>
+        <div class="vacant">Staf Produksi<br>belum direkrut</div>
+      </div>
+    </div>
+    <div class="team">
+      <div class="node role" data-role="Sekretaris"><div class="name">Sekretaris</div><div class="state">memuat…</div><div class="meta"></div></div>
+    </div>
+    <div class="team">
+      <div class="node role" data-role="CFO"><div class="name">CFO · Strategi</div><div class="state">memuat…</div><div class="meta"></div></div>
+      <div class="sub">
+        <div class="node role" data-role="Analis Pemantau"><div class="name">Analis Pemantau</div><div class="state">memuat…</div><div class="meta"></div></div>
+        <div class="vacant">Auditor Internal<br>belum direkrut</div>
+      </div>
+    </div>
+  </section>
+  <div class="collect" aria-hidden="true"></div>
+  <div class="flow-label">hasil kerja dan usulan keputusan MERAH</div>
+  <section class="outputs" aria-label="Laporan dan persetujuan">
+    <div class="node output">Laporan Harian<span class="count">dikirim ke Boss</span></div>
+    <div class="node output queue unknown" id="antrean"><span>Antrean Persetujuan</span><span class="count">status belum tersedia</span><span class="return">↩ ACC Boss</span></div>
+  </section>
+</main>
+<ul id="log"></ul>
+<script type="module">
+const REPO="Badakonline/kevinco-hq-live";
+const PREVIEW=new URLSearchParams(location.search).has("preview");
+const API=PREVIEW?"./status-preview.json":"https://api.github.com/repos/"+REPO+"/contents/status.json";
+const SEMBUNYI_MENIT=15, VALID=["menunggu","bekerja","selesai","gagal"], KODE=/^Q-\d{3}$/;
+function terapkan(data,tutup){
+  document.body.classList.toggle("closed",tutup);
+  document.querySelectorAll("[data-role]").forEach((el)=>{
+    const peran=el.dataset.role, a=(data.agen||{})[peran]||{};
+    const st=tutup?"menunggu":(VALID.includes(a.status)?a.status:null);
+    el.classList.remove("menunggu","bekerja","selesai","gagal","tidak-ada");el.classList.add(st||"tidak-ada");
+    el.querySelector(".state").textContent=st||"status belum tersedia";
+    const kode=KODE.test(a.kode_tugas||"")?a.kode_tugas:"";
+    el.querySelector(".meta").textContent=[kode,a.sejak?new Date(a.sejak).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit",hour12:false}).replace(".",":"):""].filter(Boolean).join(" · ");
+  });
+  const q=document.getElementById("antrean"), count=data.antrean&&Number.isInteger(data.antrean.menunggu)&&data.antrean.menunggu>=0?data.antrean.menunggu:null;
+  q.classList.remove("unknown","pending","empty");q.classList.add(count===null?"unknown":(count===0?"empty":"pending"));
+  q.querySelector(".count").textContent=count===null?"status belum tersedia":`${count} menunggu`;
+  q.style.borderColor=count===null?"#8B7CFF":(count===0?"#4ADE80":"#FBBF24");q.style.color=count>0?"#FBBF24":"#f5f5f5";
+  const ul=document.getElementById("log");ul.replaceChildren();
+  (data.log||[]).slice(-5).reverse().forEach((x)=>{const li=document.createElement("li");li.textContent=String(x).slice(0,80);ul.appendChild(li);});
+}
+let etag=null,jeda=60000,ultima=null;
+async function muat(){
+  const info=document.getElementById("info");
+  try{
+    const h={Accept:"application/vnd.github.raw+json"};if(etag)h["If-None-Match"]=etag;
+    const r=await fetch(API+"?t="+Date.now(),{headers:h,cache:"no-store"});
+    if(r.status===304&&ultima){}
+    else if(r.ok){etag=r.headers.get("ETag");ultima=await r.json();jeda=60000;}
+    else{jeda=300000;info.textContent="tertunda, coba lagi nanti";return;}
+    const umur=(Date.now()-new Date(ultima.waktu).getTime())/60000,tutup=!PREVIEW&&!(umur>=0&&umur<=SEMBUNYI_MENIT);terapkan(ultima,tutup);
+    const d=new Date(ultima.waktu),jam=isNaN(d)?"--:--":d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit",hour12:false}).replace(".",":");
+    info.textContent=tutup?"Kantor tutup · terakhir aktif "+jam:"Kantor buka · diperbarui "+jam;
+  }catch(e){info.textContent="tertunda, coba lagi nanti";}
+}
+function jadwal(){setTimeout(async()=>{if(!document.hidden)await muat();jadwal();},jeda);}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)muat();});await muat();jadwal();
+</script>
+</body>
+</html>

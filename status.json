@@ -1,0 +1,40 @@
+{
+    "waktu":  "2026-11-23T05:58:30Z",
+    "agen":  {
+                 "CTO":  {
+                             "status":  "menunggu",
+                             "kode_tugas":  null,
+                             "sejak":  "2026-11-22T17:15:54Z"
+                         },
+                 "Sekretaris":  {
+                                    "status":  "menunggu",
+                                    "kode_tugas":  null,
+                                    "sejak":  "2026-11-22T17:15:54Z"
+                                },
+                 "CFO":  {
+                             "status":  "menunggu",
+                             "kode_tugas":  null,
+                             "sejak":  "2026-11-22T17:15:54Z"
+                         },
+                 "Codex":  {
+                               "status":  "menunggu",
+                               "kode_tugas":  null,
+                               "sejak":  "2026-11-22T17:15:54Z"
+                           },
+                 "CEO":  {
+                             "status":  "selesai",
+                             "kode_tugas":  null,
+                             "sejak":  "2026-11-23T05:58:30Z"
+                         }
+             },
+    "log":  [
+                "13:50 CEO selesai",
+                "13:52 CEO bekerja",
+                "13:52 CEO gagal",
+                "13:58 CEO bekerja",
+                "13:58 CEO selesai"
+            ],
+    "antrean":  {
+                    "menunggu":  5
+                }
+}
