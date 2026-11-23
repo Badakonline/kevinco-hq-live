@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kantor Live · Dunia Piksel (tahap 1)</title>
+<style>
+:root{--bg:#0f0f0f;--text:#f5f5f5;--wait:#8B7CFF;--work:#FBBF24;--done:#4ADE80;--fail:#FF4D6D}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Ink Free","Segoe Print",cursive}
+body{display:flex;flex-direction:column;align-items:center;padding:8px 10px 24px}
+h1{font-size:1.3rem;font-weight:400;color:var(--wait);margin:4px 0}
+#bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;font-size:.85rem;margin-bottom:8px}
+#mode{padding:2px 10px;border-radius:10px;border:1px solid;font-size:.9rem}
+#mode.live{color:var(--done);border-color:var(--done)}#mode.demo{color:var(--work);border-color:var(--work);font-size:1.2rem;padding:3px 16px;animation:k 1s steps(2) infinite}
+@keyframes k{50%{opacity:.45}}
+#wrap{position:relative;max-width:100%}
+canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;border:2px solid #403a58;background:#000;touch-action:manipulation}
+#pesan{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;background:#000a;font-size:1.1rem;padding:16px}
+#panel{width:100%;max-width:640px;margin-top:10px;border:1px solid #403a58;border-radius:10px;padding:10px 12px;min-height:84px;font-size:.95rem;line-height:1.4}
+#panel .n{font-size:1.1rem}#panel .s{font-weight:700}
+.s.menunggu{color:var(--wait)}.s.bekerja{color:var(--work)}.s.selesai{color:var(--done)}.s.gagal{color:var(--fail)}
+#demo{display:none;margin-top:8px;gap:6px;flex-wrap:wrap;justify-content:center}#demo.on{display:flex}
+button{background:#1b1b1b;color:var(--text);border:1px solid var(--wait);border-radius:8px;padding:5px 10px;font:inherit;font-size:.85rem}
+a{color:var(--wait)}small{opacity:.7}
+</style>
+</head>
+<body>
+<h1>Kantor Live · Dunia Piksel</h1>
+<div id="bar"><span id="mode" class="live">LIVE</span><span id="info">memuat...</span><span id="aktif"></span></div>
+<div id="wrap"><canvas id="c" width="320" height="224" aria-label="Bengkel CTO"></canvas><div id="pesan"></div></div>
+<div id="panel">Klik Builder atau Codex untuk melihat detail. <small>Tahap 1: hanya Bengkel CTO. Gambar hanya mengikuti data status.json; tidak ada gerak kerja bila data tidak mengatakannya.</small></div>
+<div id="demo"></div>
+<p><small><a href="./">Tampilan bagan</a> · <a href="?demo">DEMO</a> · <a href="./">LIVE</a></small></p>
+<script type="module">
+const REPO="Badakonline/kevinco-hq-live", W=320, H=224, T=16;
+const DEMO=new URLSearchParams(location.search).has("demo");
+const VALID=["menunggu","bekerja","selesai","gagal"], KODE=/^Q-\d{3}$/, TUTUP_MENIT=15;
+const cv=document.getElementById("c"), cx=cv.getContext("2d"); cx.imageSmoothingEnabled=false;
+const modeEl=document.getElementById("mode"), info=document.getElementById("info"), panel=document.getElementById("panel"), pesan=document.getElementById("pesan");
+modeEl.textContent=DEMO?"DEMO · data contoh, bukan kantor nyata":"LIVE"; modeEl.className=DEMO?"demo":"live";
+// Agen di Bengkel CTO. kunci = nama di status.json
+const AGEN=[
+  {kunci:"CTO",nama:"Builder",jabatan:"CTO (Claude Code)",warna:["#E8743B","#B8531F","#FFD2B0"],meja:{x:64,y:92},diam:{x:112,y:150}},
+  {kunci:"Codex",nama:"Codex",jabatan:"Penguji ringan",warna:["#3BB8A8","#1F7F73","#B6F2EA"],meja:{x:208,y:92},diam:{x:196,y:150}}
+];
+const st={data:null,tutup:true,ada:false};
+for(const a of AGEN){a.x=a.diam.x;a.y=a.diam.y;a.state=null;a.arah=1;a.lompat=0;a.kedip=0;a.sejak=null;a.kode="";}
+// ---- data ----
+const DEMOSET=[{CTO:"bekerja",Codex:"menunggu"},{CTO:"selesai",Codex:"bekerja"},{CTO:"gagal",Codex:"selesai"},{CTO:"menunggu",Codex:"menunggu"}];
+function terapkan(data,tutup){
+  st.data=data;st.tutup=tutup;st.ada=true;
+  let aktif=0;
+  for(const a of AGEN){const d=(data.agen||{})[a.kunci]||{};a.state=VALID.includes(d.status)?d.status:null;a.sejak=d.sejak||null;a.kode=KODE.test(d.kode_tugas||"")?d.kode_tugas:"";if(a.state==="bekerja"&&!tutup)aktif++;}
+  document.getElementById("aktif").textContent=tutup?"":"agen bekerja: "+aktif;
+}
+const jam=(iso)=>{const d=new Date(iso);return isNaN(d)?"--:--":d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit",hour12:false}).replace(".",":")};
+let etag=null,ultima=null,jeda=60000;
+async function muat(){
+  if(DEMO)return;
+  try{
+    const h={Accept:"application/vnd.github.raw+json"};if(etag)h["If-None-Match"]=etag;
+    const r=await fetch("https://api.github.com/repos/"+REPO+"/contents/status.json?t="+Date.now(),{headers:h,cache:"no-store"});
+    if(r.status===304&&ultima){}else if(r.ok){etag=r.headers.get("ETag");ultima=await r.json();jeda=60000;}
+    else{jeda=300000;if(!st.ada)pesanTampil("data belum masuk");info.textContent="tertunda, coba lagi nanti";return;}
+    const umur=(Date.now()-new Date(ultima.waktu).getTime())/60000,tutup=!(umur>=0&&umur<=TUTUP_MENIT);
+    terapkan(ultima,tutup);pesanTampil(tutup?"Kantor tutup":"");
+    info.textContent=(tutup?"Kantor tutup · terakhir aktif ":"Kantor buka · diperbarui ")+jam(ultima.waktu);
+  }catch(e){if(!st.ada)pesanTampil("data belum masuk");info.textContent="tertunda, coba lagi nanti";}
+}
+function pesanTampil(t){pesan.style.display=t?"flex":"none";pesan.textContent=t;}
+function jadwal(){setTimeout(async()=>{if(!document.hidden)await muat();jadwal();},jeda);}
+if(DEMO){
+  const box=document.getElementById("demo");box.className="on";
+  DEMOSET.forEach((s,i)=>{const b=document.createElement("button");b.textContent="contoh "+(i+1)+": Builder "+s.CTO+", Codex "+s.Codex;b.onclick=()=>pasangDemo(i);box.appendChild(b);});
+  const pasangDemo=(i)=>{const s=DEMOSET[i],now=new Date().toISOString();terapkan({agen:{CTO:{status:s.CTO,kode_tugas:"Q-000",sejak:now},Codex:{status:s.Codex,kode_tugas:null,sejak:now}}},false);info.textContent="DEMO · data contoh";};
+  pasangDemo(0);
+}else{await muat();jadwal();}
+// ---- gambar ----
+function rect(x,y,w,h,c){cx.fillStyle=c;cx.fillRect(Math.round(x),Math.round(y),w,h);}
+function lantai(){
+  for(let ty=0;ty<H/T;ty++)for(let tx=0;tx<W/T;tx++){rect(tx*T,ty*T,T,T,(tx+ty)%2?"#2a2438":"#252033");}
+  rect(0,0,W,48,"#1a1626");for(let x=0;x<W;x+=16)rect(x,44,8,4,"#3a3150");   // dinding belakang
+  rect(0,0,W,4,"#8B7CFF");rect(0,H-4,W,4,"#403a58");rect(0,0,4,H,"#403a58");rect(W-4,0,4,H,"#403a58");
+}
+function meja(x,y,hidup,warna){
+  rect(x-26,y,52,22,"#5a4636");rect(x-26,y,52,4,"#7a6046");rect(x-24,y+22,4,10,"#3d2f24");rect(x+20,y+22,4,10,"#3d2f24");
+  rect(x-10,y-18,20,16,"#111");rect(x-8,y-16,16,12,hidup?warna:"#1d1d28");rect(x-3,y-2,6,3,"#444");    // layar
+  if(hidup&&((frame>>2)%2===0))rect(x-6,y-14,6,2,"#fff8");
+}
+function rak(){rect(240,16,60,28,"#3d2f24");for(let i=0;i<3;i++){rect(244+i*18,20,14,20,"#1d1814");rect(248+i*18,24,6,12,"#2a2a33");}rect(240,44,60,3,"#2a2018");}
+function sprite(a,px,py,pose){
+  const [b,g,l]=a.warna;const bob=pose==="idle"?((frame>>3)%2):0;let y=py-bob;
+  if(pose==="hop"){y-=Math.round(Math.abs(Math.sin(frame/3))*10);}
+  rect(px-6,y+13,12,2,"#0006");                                  // bayangan
+  rect(px-5,y,10,12,b);rect(px-5,y,10,2,l);rect(px-5,y+10,10,2,g);// badan balok
+  rect(px-7,y+3,2,6,g);rect(px+5,y+3,2,6,g);                       // lengan
+  if(pose==="ketik"){const k=(frame>>1)%2;rect(px-7,y+7+k,2,3,l);rect(px+5,y+8-k,2,3,l);}
+  rect(px-4,y+12,3,3,g);rect(px+1,y+12,3,3,g);                     // kaki
+  const tutupMata=a.kedip>0||pose==="tidur";
+  if(tutupMata){rect(px-3,y+5,2,1,"#111");rect(px+1,y+5,2,1,"#111");}
+  else if(a.state==="selesai"){rect(px-3,y+4,2,1,"#111");rect(px-3,y+5,1,1,"#111");rect(px+1,y+4,2,1,"#111");rect(px+2,y+5,1,1,"#111");}
+  else{const dx=pose==="jalan"?a.arah:0;rect(px-3+dx,y+4,2,2,"#111");rect(px+1+dx,y+4,2,2,"#111");}
+  if(a.state==="gagal"&&(frame>>2)%2===0){rect(px-1,y-12,3,7,"#FF4D6D");rect(px-1,y-3,3,3,"#FF4D6D");}
+  if(a.state==="bekerja"&&pose==="ketik"){rect(px-1,y-6,1,1,"#FBBF24");}
+}
+let frame=0;const cap=Object.fromEntries(AGEN.map(a=>[a.kunci,{}]));
+function langkah(){
+  frame++;
+  for(const a of AGEN){
+    if(a.kedip>0)a.kedip--;else if(Math.random()<0.012)a.kedip=2;
+    const target=a.state==="bekerja"&&!st.tutup?a.meja:a.diam;
+    // bekerja: duduk di kursi di belakang meja (y dekat meja); selain itu: di spot diam
+    const tx=target.x,ty=target===a.meja?a.meja.y-6:target.y;
+    let dx=Math.sign(tx-a.x),dy=Math.sign(ty-a.y);
+    a.jalan=(dx!==0||dy!==0);
+    if(a.jalan){if(dx)a.arah=dx;a.x+=dx;a.y+=dy;}
+  }
+}
+function gambar(){
+  lantai();rak();
+  const tampilAgen=(a,duduk)=>{
+    if(st.tutup&&st.ada)return;                                   // tutup: agen pulang
+    if(!a.state){rect(a.x-5,a.y,10,12,"#2a2a33");rect(a.x-1,a.y+3,2,5,"#8B7CFF");rect(a.x-1,a.y+9,2,2,"#8B7CFF");return;} // data belum ada
+    sprite(a,a.x,a.y,duduk?"ketik":a.jalan?"jalan":a.state==="selesai"?"hop":"idle");
+  };
+  const duduk=(a)=>a.state==="bekerja"&&!a.jalan;
+  for(const a of AGEN)if(duduk(a))tampilAgen(a,true);              // yang duduk digambar sebelum meja (di belakangnya)
+  for(const a of AGEN)meja(a.meja.x,a.meja.y,!!st.ada&&!st.tutup&&a.state==="bekerja",a.warna[2]);
+  for(const a of AGEN)if(!duduk(a))tampilAgen(a,false);
+  if(st.ada&&st.tutup){cx.fillStyle="#000b";cx.fillRect(0,0,W,H);}
+}
+function ukur(){const s=Math.max(1,Math.floor(Math.min(document.getElementById("wrap").parentElement.clientWidth-8,640)/W));cv.style.width=W*s+"px";cv.style.height=H*s+"px";}
+addEventListener("resize",ukur);ukur();
+// Gerak berbasis waktu (12 langkah/detik), bukan jumlah frame: tetap benar bila peramban menurunkan laju frame.
+let terakhir=0;function loop(t){if(!terakhir)terakhir=t;if(!document.hidden){let n=0;while(t-terakhir>83&&n<12){terakhir+=83;langkah();n++;}if(t-terakhir>83*12)terakhir=t;gambar();}else terakhir=t;requestAnimationFrame(loop);}requestAnimationFrame(loop);
+// ---- klik ----
+function tampil(a){
+  const stt=a.state||"belum tersedia";
+  panel.innerHTML=`<div class="n">${a.nama} · ${a.jabatan}</div><div>status: <span class="s ${a.state||""}">${stt}</span>${st.tutup&&st.ada?" (kantor tutup)":""}</div><div>${a.sejak?"sejak "+jam(a.sejak):"waktu belum tersedia"}${a.kode?" · tugas "+a.kode:""}</div>${DEMO?"<div><small>DEMO: data contoh</small></div>":""}`;
+}
+cv.addEventListener("click",(e)=>{
+  const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)*W/r.width,y=(e.clientY-r.top)*H/r.height;
+  if(x>240&&x<300&&y>16&&y<47){panel.innerHTML='<div class="n">Rak Staf Produksi</div><div>belum direkrut. Slot ini diisi sub-agen Muse (distribusi dan konten) setelah ada penulis statusnya.</div>';return;}
+  for(const a of AGEN){if(Math.abs(x-a.x)<10&&y>a.y-14&&y<a.y+16){tampil(a);return;}}
+});
+</script>
+</body>
+</html>
