@@ -1,5 +1,5 @@
 {
-    "waktu":  "2026-11-23T05:58:30Z",
+    "waktu":  "2026-11-24T07:49:23Z",
     "agen":  {
                  "CTO":  {
                              "status":  "menunggu",
@@ -24,15 +24,15 @@
                  "CEO":  {
                              "status":  "selesai",
                              "kode_tugas":  null,
-                             "sejak":  "2026-11-23T05:58:30Z"
+                             "sejak":  "2026-11-24T07:49:23Z"
                          }
              },
     "log":  [
-                "13:50 CEO selesai",
-                "13:52 CEO bekerja",
                 "13:52 CEO gagal",
                 "13:58 CEO bekerja",
-                "13:58 CEO selesai"
+                "13:58 CEO selesai",
+                "15:49 CEO bekerja",
+                "15:49 CEO selesai"
             ],
     "antrean":  {
                     "menunggu":  5

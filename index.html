@@ -11,7 +11,7 @@ body{display:flex;flex-direction:column;align-items:center;padding:10px 12px 24p
 main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:0}.node{background:var(--node);border:1px solid var(--wait);border-radius:12px;padding:10px 12px;text-align:center;min-width:0}.boss{width:min(100%,300px);border-radius:28px}.hermes{width:min(100%,360px);border-radius:14px}.role{transition:border-color .35s,color .35s;line-height:1.3}.role .name{font-size:1rem}.role .state{font-size:.88rem;margin-top:2px}.role .meta{font-size:.76rem;opacity:.76;margin-top:2px;min-height:1em}
 .role.menunggu{border-color:var(--wait)}.role.bekerja{border:2px solid var(--work);color:var(--work);animation:pulse 1.4s ease-in-out infinite}.role.selesai{border-color:var(--done);color:var(--done)}.role.gagal{border:2px solid var(--fail);color:var(--fail)}.role.tidak-ada{border-style:dashed;color:#aaa;opacity:.64}
 .arrow{color:var(--line);font-size:1.2rem;line-height:1;padding:3px 0}.branch-label,.flow-label{font-size:.78rem;color:#c5c5c5;text-align:center;margin:2px 0 6px}.teams{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:start}.team{border:1px solid #403a58;border-radius:12px;padding:9px;display:flex;flex-direction:column;gap:8px;min-width:0}.team>.role{width:100%}.team .role{padding:8px}.sub{display:flex;flex-direction:column;gap:7px}.sub .role .name{font-size:.9rem}.vacant{border:1px dashed var(--wait);border-radius:10px;color:#aaa;opacity:.62;text-align:center;padding:8px;font-size:.82rem;line-height:1.25}
-.collect{width:100%;border-top:1px solid var(--line);height:22px;margin:9px 0 0;position:relative}.collect:after{content:"↓";position:absolute;top:0;left:50%;transform:translate(-50%,-2px);color:var(--line);background:var(--bg);padding:0 5px}.outputs{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.output{min-height:84px;display:flex;flex-direction:column;justify-content:center;gap:5px}.queue{border-color:var(--done)}.queue.pending{border-color:var(--work);color:var(--work)}.queue.unknown{border-color:var(--wait)}.queue .count{font-size:.88rem}.queue .return{font-size:.76rem;color:var(--text);opacity:.82}.queue{border-style:dashed}.catatan{font-size:.74rem;opacity:.6;text-align:center;margin:-6px 0 10px}.closed main{opacity:.38;filter:grayscale(.55)}#log{font-size:.75rem;opacity:.7;list-style:none;padding:0;margin:10px 12px 0;text-align:center}#log li{margin:2px 0}
+.collect{width:100%;border-top:1px solid var(--line);height:22px;margin:9px 0 0;position:relative}.collect:after{content:"↓";position:absolute;top:0;left:50%;transform:translate(-50%,-2px);color:var(--line);background:var(--bg);padding:0 5px}.outputs{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.output{min-height:84px;display:flex;flex-direction:column;justify-content:center;gap:5px}.queue{border-color:var(--done)}.queue.pending{border-color:var(--work);color:var(--work)}.queue.unknown{border-color:var(--wait)}.queue .count{font-size:.88rem}.queue .return{font-size:.76rem;color:var(--text);opacity:.82}.queue{border-style:dashed}.build{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.catatan{font-size:.74rem;opacity:.6;text-align:center;margin:-6px 0 10px}.closed main{opacity:.38;filter:grayscale(.55)}#log{font-size:.75rem;opacity:.7;list-style:none;padding:0;margin:10px 12px 0;text-align:center}#log li{margin:2px 0}
 .muse{width:100%;border:1px dashed var(--wait);border-radius:10px;padding:8px;font-size:.82rem;line-height:1.3;color:#cfcfcf;display:flex;flex-direction:column;gap:4px}.muse .mh{font-size:.95rem;color:var(--text)}.muse .mrow{display:flex;justify-content:space-between;gap:6px}.muse .mto{color:var(--wait);white-space:nowrap}.muse .mnote{font-size:.72rem;opacity:.65}
 .cos{width:min(100%,360px);border:1px dashed var(--wait);border-radius:12px;padding:8px;font-size:.8rem;line-height:1.3;color:#cfcfcf;text-align:center}.cos .mh{font-size:.92rem;color:var(--text)}.cos .mnote{font-size:.7rem;opacity:.65;margin-top:3px}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 #FBBF2433}50%{box-shadow:0 0 10px 2px #FBBF2433}}
@@ -46,27 +46,13 @@ main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;a
 <main id="kantor">
   <div class="node boss">Boss · pendiri / CEO</div>
   <div class="arrow" aria-hidden="true">↓</div>
-  <div class="cos" aria-label="Jeff, Chief of Staff"><div class="mh">Jeff · Chief of Staff</div><div>Muse · Asisten Pribadi Boss, lapor langsung ke Boss</div><div class="mnote">meneruskan perintah Boss ke Hermes · belum ada penulis status, tanpa lampu</div></div>
+  <div class="cos" aria-label="Jeff, Chief of Staff"><div class="mh">Jeff · Chief of Staff</div><div>Muse AI · Asisten Pribadi Boss, lapor langsung ke Boss</div><div class="mnote">meneruskan perintah Boss ke Hermes · belum ada penulis status, tanpa lampu</div></div>
   <div class="arrow" aria-hidden="true">↓</div>
-  <div class="node role hermes" data-role="CEO"><div class="name">Hermes · calon CEO (magang) · orkestrator 24 jam</div><div class="state">memuat…</div><div class="meta"></div></div>
-  <div class="arrow" aria-hidden="true">↓</div><div class="branch-label">mengoordinasikan tim</div>
-  <section class="teams" aria-label="Tim perusahaan">
-    <div class="team">
-      <div class="node role" data-role="CTO"><div class="name">CTO</div><div class="state">memuat…</div><div class="meta"></div></div>
-      <div class="sub">
-        <div class="node role" data-role="Codex"><div class="name">Codex · pentest / tugas ringan</div><div class="state">memuat…</div><div class="meta"></div></div>
-        <div class="vacant">Staf Produksi<br>diisi sub-agen Muse (distribusi, konten); belum ada penulis status</div>
-      </div>
-    </div>
-    <div class="team">
-      <div class="node role" data-role="Sekretaris"><div class="name">Sekretaris</div><div class="state">memuat…</div><div class="meta"></div></div>
-    </div>
-    <div class="team">
-      <div class="node role" data-role="CFO"><div class="name">CFO · Strategi</div><div class="state">memuat…</div><div class="meta"></div></div>
-      <div class="sub">
-        <div class="node role" data-role="Analis Pemantau"><div class="name">Analis Pemantau</div><div class="state">memuat…</div><div class="meta"></div></div>
-      </div>
-    </div>
+  <div class="node role hermes" data-role="CEO"><div class="name">Hermes · DeepSeek · orkestrasi · auto learning</div><div class="state">memuat…</div><div class="meta"></div></div>
+  <div class="arrow" aria-hidden="true">↓</div><div class="branch-label">menugaskan building</div>
+  <section class="build" aria-label="Building">
+    <div class="node role" data-role="CTO"><div class="name">Claude Code · building</div><div class="state">memuat…</div><div class="meta"></div></div>
+    <div class="node role" data-role="Cowork"><div class="name">Cowork · building</div><div class="state">memuat…</div><div class="meta"></div></div>
   </section>
   <div class="collect" aria-hidden="true"></div>
   <div class="flow-label">keputusan MERAH dari siapa pun masuk antrean; antrean bukan jabatan, hanya menunggu acc Boss</div>
@@ -103,17 +89,15 @@ main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;a
   <div class="ar" aria-hidden="true">↓ lanjut</div>
   <div class="box"><span class="n">5</span>Jeff menulis tugas ke Kotak Surat<small>Hermes memasukkannya ke Papan Status (kode Q)</small></div>
   <div class="ar" aria-hidden="true">↓ &nbsp;<span style="font-size:.74rem">(jalur B masuk di sini)</span></div>
-  <div class="box"><span class="n">6</span>Hermes (calon CEO, orkestrator 24 jam) routing</div>
+  <div class="box"><span class="n">6</span>Hermes (orkestrator 24 jam) routing</div>
   <div class="ar" aria-hidden="true">↓</div>
-  <div class="br c5">
-    <div class="chip"><span class="t">ringan / rutin</span>subagen</div>
-    <div class="chip"><span class="t">bangun / perbaiki sistem</span>Claude Code (CTO)</div>
-    <div class="chip"><span class="t">nilai / analisis angka</span>Mrs.Plan (CFO)</div>
-    <div class="chip"><span class="t">jurnal / review / konten</span>Mrs.Secretary</div>
+  <div class="br c3">
+    <div class="chip"><span class="t">ringan / rutin</span>Hermes sendiri atau subagen</div>
+    <div class="chip"><span class="t">bangun / perbaiki sistem</span>Claude Code atau Cowork</div>
     <div class="chip"><span class="t">judgement berat</span><span class="loop">↩ balik ke Jeff</span></div>
   </div>
   <div class="ar" aria-hidden="true">↓</div>
-  <div class="box"><span class="n">7</span>Eksekusi oleh yang ditunjuk<small>yang membangun tidak menilai angka · yang menilai tidak mengubah sistem</small></div>
+  <div class="box"><span class="n">7</span>Eksekusi oleh yang ditunjuk<small>Hermes mengorkestrasi, Claude Code dan Cowork membangun</small></div>
   <div class="ar" aria-hidden="true">↓</div>
   <div class="dia" id="alur-8"><div><span class="n">8</span>Keputusan MERAH baru<br>di tengah jalan?</div></div>
   <div class="ar" aria-hidden="true">↓</div>
