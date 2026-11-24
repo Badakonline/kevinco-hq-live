@@ -11,11 +11,11 @@ body{display:flex;flex-direction:column;align-items:center;padding:10px 12px 24p
 main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:0}.node{background:var(--node);border:1px solid var(--wait);border-radius:12px;padding:10px 12px;text-align:center;min-width:0}.boss{width:min(100%,300px);border-radius:28px}.hermes{width:min(100%,360px);border-radius:14px}.role{transition:border-color .35s,color .35s;line-height:1.3}.role .name{font-size:1rem}.role .state{font-size:.88rem;margin-top:2px}.role .meta{font-size:.76rem;opacity:.76;margin-top:2px;min-height:1em}
 .role.menunggu{border-color:var(--wait)}.role.bekerja{border:2px solid var(--work);color:var(--work);animation:pulse 1.4s ease-in-out infinite}.role.selesai{border-color:var(--done);color:var(--done)}.role.gagal{border:2px solid var(--fail);color:var(--fail)}.role.tidak-ada{border-style:dashed;color:#aaa;opacity:.64}
 .arrow{color:var(--line);font-size:1.2rem;line-height:1;padding:3px 0}.branch-label,.flow-label{font-size:.78rem;color:#c5c5c5;text-align:center;margin:2px 0 6px}.teams{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:start}.team{border:1px solid #403a58;border-radius:12px;padding:9px;display:flex;flex-direction:column;gap:8px;min-width:0}.team>.role{width:100%}.team .role{padding:8px}.sub{display:flex;flex-direction:column;gap:7px}.sub .role .name{font-size:.9rem}.vacant{border:1px dashed var(--wait);border-radius:10px;color:#aaa;opacity:.62;text-align:center;padding:8px;font-size:.82rem;line-height:1.25}
-.collect{width:100%;border-top:1px solid var(--line);height:22px;margin:9px 0 0;position:relative}.collect:after{content:"↓";position:absolute;top:0;left:50%;transform:translate(-50%,-2px);color:var(--line);background:var(--bg);padding:0 5px}.outputs{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.output{min-height:84px;display:flex;flex-direction:column;justify-content:center;gap:5px}.queue{border-color:var(--done)}.queue.pending{border-color:var(--work);color:var(--work)}.queue.unknown{border-color:var(--wait)}.queue .count{font-size:.88rem}.queue .return{font-size:.76rem;color:var(--text);opacity:.82}.closed main{opacity:.38;filter:grayscale(.55)}#log{font-size:.75rem;opacity:.7;list-style:none;padding:0;margin:10px 12px 0;text-align:center}#log li{margin:2px 0}
+.collect{width:100%;border-top:1px solid var(--line);height:22px;margin:9px 0 0;position:relative}.collect:after{content:"↓";position:absolute;top:0;left:50%;transform:translate(-50%,-2px);color:var(--line);background:var(--bg);padding:0 5px}.outputs{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.output{min-height:84px;display:flex;flex-direction:column;justify-content:center;gap:5px}.queue{border-color:var(--done)}.queue.pending{border-color:var(--work);color:var(--work)}.queue.unknown{border-color:var(--wait)}.queue .count{font-size:.88rem}.queue .return{font-size:.76rem;color:var(--text);opacity:.82}.queue{border-style:dashed}.catatan{font-size:.74rem;opacity:.6;text-align:center;margin:-6px 0 10px}.closed main{opacity:.38;filter:grayscale(.55)}#log{font-size:.75rem;opacity:.7;list-style:none;padding:0;margin:10px 12px 0;text-align:center}#log li{margin:2px 0}
 .muse{width:100%;border:1px dashed var(--wait);border-radius:10px;padding:8px;font-size:.82rem;line-height:1.3;color:#cfcfcf;display:flex;flex-direction:column;gap:4px}.muse .mh{font-size:.95rem;color:var(--text)}.muse .mrow{display:flex;justify-content:space-between;gap:6px}.muse .mto{color:var(--wait);white-space:nowrap}.muse .mnote{font-size:.72rem;opacity:.65}
-.top{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.3fr);gap:8px;align-items:center}.top .hermes{width:100%}.cos{border:1px dashed var(--wait);border-radius:12px;padding:8px;font-size:.8rem;line-height:1.3;color:#cfcfcf;text-align:center}.cos .mh{font-size:.92rem;color:var(--text)}.cos .mnote{font-size:.7rem;opacity:.65;margin-top:3px}.top .mid{color:var(--line)}
+.cos{width:min(100%,360px);border:1px dashed var(--wait);border-radius:12px;padding:8px;font-size:.8rem;line-height:1.3;color:#cfcfcf;text-align:center}.cos .mh{font-size:.92rem;color:var(--text)}.cos .mnote{font-size:.7rem;opacity:.65;margin-top:3px}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 #FBBF2433}50%{box-shadow:0 0 10px 2px #FBBF2433}}
-@media(max-width:560px){.top{grid-template-columns:minmax(0,1fr)}.top .mid{transform:rotate(90deg);justify-self:center}.muse{grid-column:1/-1}body{padding-left:10px;padding-right:10px}.teams{width:100%;min-width:0;grid-template-columns:minmax(0,1fr);gap:8px}.team{width:100%;min-width:0;padding:8px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}.team>.role{grid-column:1/-1}.sub{display:contents}.sub>*{min-width:0}.hermes{width:100%}.vacant{font-size:.78rem;padding:7px}.outputs{gap:8px}.output{padding:9px 7px;min-height:78px}.role .name{font-size:.95rem}}
+@media(max-width:560px){.muse{grid-column:1/-1}body{padding-left:10px;padding-right:10px}.teams{width:100%;min-width:0;grid-template-columns:minmax(0,1fr);gap:8px}.team{width:100%;min-width:0;padding:8px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}.team>.role{grid-column:1/-1}.sub{display:contents}.sub>*{min-width:0}.hermes{width:100%}.vacant{font-size:.78rem;padding:7px}.outputs{gap:8px}.output{padding:9px 7px;min-height:78px}.role .name{font-size:.95rem}}
 @media(prefers-reduced-motion:reduce){.role.bekerja{animation:none}}
 </style>
 <style id="alur-css">
@@ -42,15 +42,13 @@ main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;a
 </style>
 </head>
 <body>
-<h1>Kantor Live</h1><div id="info">memuat...</div>
+<h1>Kantor Live</h1><div id="info">memuat...</div><div class="catatan">Pembangunan Kantor Live: tahap 1 selesai; tahap 2 sampai 4 menunggu Boss melihat tahap 1.</div>
 <main id="kantor">
   <div class="node boss">Boss · pendiri / CEO</div>
   <div class="arrow" aria-hidden="true">↓</div>
-  <div class="top">
-    <div class="cos" aria-label="Jeff, Chief of Staff"><div class="mh">Jeff · Chief of Staff</div><div>Muse · di samping CEO</div><div class="mnote">meneruskan ke Hermes · belum ada penulis status, tanpa lampu</div></div>
-    <div class="mid" aria-hidden="true">→</div>
-  <div class="node role hermes" data-role="CEO"><div class="name">Hermes · calon CEO · tahap 2</div><div class="state">memuat…</div><div class="meta"></div></div>
-  </div>
+  <div class="cos" aria-label="Jeff, Chief of Staff"><div class="mh">Jeff · Chief of Staff</div><div>Muse · Asisten Pribadi Boss, lapor langsung ke Boss</div><div class="mnote">meneruskan perintah Boss ke Hermes · belum ada penulis status, tanpa lampu</div></div>
+  <div class="arrow" aria-hidden="true">↓</div>
+  <div class="node role hermes" data-role="CEO"><div class="name">Hermes · calon CEO (magang) · orkestrator 24 jam</div><div class="state">memuat…</div><div class="meta"></div></div>
   <div class="arrow" aria-hidden="true">↓</div><div class="branch-label">mengoordinasikan tim</div>
   <section class="teams" aria-label="Tim perusahaan">
     <div class="team">
@@ -62,27 +60,23 @@ main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;a
     </div>
     <div class="team">
       <div class="node role" data-role="Sekretaris"><div class="name">Sekretaris</div><div class="state">memuat…</div><div class="meta"></div></div>
-      <div class="muse" aria-label="Muse, staf bersama CTO dan CFO">
-        <div class="mh">Muse · staf bersama</div>
-        <div class="mrow"><span>jeff · distribusi dan konten</span><span class="mto">← CTO</span></div>
-        <div class="mrow"><span>riset dan pantau (belum ada agen)</span><span class="mto">CFO →</span></div>
-        <div class="mnote">Integrasi diperlukan: belum ada penulis status, jadi tanpa lampu</div>
-      </div>
     </div>
     <div class="team">
       <div class="node role" data-role="CFO"><div class="name">CFO · Strategi</div><div class="state">memuat…</div><div class="meta"></div></div>
       <div class="sub">
         <div class="node role" data-role="Analis Pemantau"><div class="name">Analis Pemantau</div><div class="state">memuat…</div><div class="meta"></div></div>
-        <div class="vacant">Auditor Internal<br>belum direkrut</div>
       </div>
     </div>
   </section>
   <div class="collect" aria-hidden="true"></div>
-  <div class="flow-label">hasil kerja dan usulan keputusan MERAH</div>
+  <div class="flow-label">keputusan MERAH dari siapa pun masuk antrean; antrean bukan jabatan, hanya menunggu acc Boss</div>
   <section class="outputs" aria-label="Laporan dan persetujuan">
     <div class="node output">Laporan Harian<span class="count">dikirim ke Boss</span></div>
-    <div class="node output queue unknown" id="antrean"><span>Antrean Persetujuan</span><span class="count">status belum tersedia</span><span class="return">↩ ACC Boss</span></div>
+    <div class="node output queue unknown" id="antrean"><span>Antrean Persetujuan</span><span class="count">status belum tersedia</span><span class="return">menunggu acc Boss</span></div>
   </section>
+  <div class="arrow" aria-hidden="true">↓</div>
+  <div class="node boss">Boss memutuskan · 1 acc, 2 tolak</div>
+  <div class="flow-label">↩ keputusan kembali ke Boss, lalu ke pelaksana</div>
 </main>
 <ul id="log"></ul>
 <section id="alur" aria-label="Alur Perusahaan">
@@ -142,7 +136,8 @@ main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;a
 const REPO="Badakonline/kevinco-hq-live";
 const PREVIEW=new URLSearchParams(location.search).has("preview");
 const API=PREVIEW?"./status-preview.json":"https://api.github.com/repos/"+REPO+"/contents/status.json";
-const SEMBUNYI_MENIT=15, VALID=["menunggu","bekerja","selesai","gagal"], KODE=/^Q-\d{3}$/;
+const STALE_JAM=12,SEMBUNYI_MENIT=15, VALID=["menunggu","bekerja","selesai","gagal"], KODE=/^Q-\d{3}$/;
+const fmt=(d)=>{const j=d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit",hour12:false}).replace(".",":");return d.toDateString()===new Date().toDateString()?j:d.toLocaleDateString("id-ID",{day:"2-digit",month:"2-digit"})+" "+j;};
 function terapkan(data,tutup){
   document.body.classList.toggle("closed",tutup);
   document.querySelectorAll("[data-role]").forEach((el)=>{
@@ -151,7 +146,8 @@ function terapkan(data,tutup){
     el.classList.remove("menunggu","bekerja","selesai","gagal","tidak-ada");el.classList.add(st||"tidak-ada");
     el.querySelector(".state").textContent=st||"status belum tersedia";
     const kode=KODE.test(a.kode_tugas||"")?a.kode_tugas:"";
-    el.querySelector(".meta").textContent=[kode,a.sejak?new Date(a.sejak).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit",hour12:false}).replace(".",":"):""].filter(Boolean).join(" · ");
+    const sj=a.sejak?new Date(a.sejak):null,ok=sj&&!isNaN(sj),basi=ok&&Date.now()-sj>STALE_JAM*3600000;
+    el.querySelector(".meta").textContent=[kode,ok?(basi?"stale · terakhir "+fmt(sj):"sejak "+fmt(sj)):"belum ada penulis status"].filter(Boolean).join(" · ");
   });
   const q=document.getElementById("antrean"), count=data.antrean&&Number.isInteger(data.antrean.menunggu)&&data.antrean.menunggu>=0?data.antrean.menunggu:null;
   q.classList.remove("unknown","pending","empty");q.classList.add(count===null?"unknown":(count===0?"empty":"pending"));
@@ -170,8 +166,8 @@ async function muat(){
     else if(r.ok){etag=r.headers.get("ETag");ultima=await r.json();jeda=60000;}
     else{jeda=300000;info.textContent="tertunda, coba lagi nanti";return;}
     const umur=(Date.now()-new Date(ultima.waktu).getTime())/60000,tutup=!PREVIEW&&!(umur>=0&&umur<=SEMBUNYI_MENIT);terapkan(ultima,tutup);
-    const d=new Date(ultima.waktu),jam=isNaN(d)?"--:--":d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit",hour12:false}).replace(".",":");
-    info.textContent=tutup?"Kantor tutup · terakhir aktif "+jam:"Kantor buka · diperbarui "+jam;
+    const ts=[ultima.waktu,...Object.values(ultima.agen||{}).map((x)=>x&&x.sejak)].map((x)=>new Date(x).getTime()).filter((x)=>!isNaN(x)),d=new Date(Math.max(...ts));
+    info.textContent=isNaN(d)?"waktu belum tersedia":(tutup?"Kantor tutup · terakhir aktif ":"Kantor buka · diperbarui ")+fmt(d);
   }catch(e){info.textContent="tertunda, coba lagi nanti";}
 }
 function jadwal(){setTimeout(async()=>{if(!document.hidden)await muat();jadwal();},jeda);}
