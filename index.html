@@ -17,6 +17,28 @@ main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;a
 @media(max-width:560px){.muse{grid-column:1/-1}body{padding-left:10px;padding-right:10px}.teams{width:100%;min-width:0;grid-template-columns:minmax(0,1fr);gap:8px}.team{width:100%;min-width:0;padding:8px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}.team>.role{grid-column:1/-1}.sub{display:contents}.sub>*{min-width:0}.hermes{width:100%}.vacant{font-size:.78rem;padding:7px}.outputs{gap:8px}.output{padding:9px 7px;min-height:78px}.role .name{font-size:.95rem}}
 @media(prefers-reduced-motion:reduce){.role.bekerja{animation:none}}
 </style>
+<style id="alur-css">
+#alur{width:100%;max-width:680px;margin:34px 0 0;display:flex;flex-direction:column;align-items:center;font-family:inherit}
+#alur h2{font-size:1.2rem;font-weight:400;color:var(--wait);margin:0 0 2px}#alur .sub0{font-size:.78rem;opacity:.7;margin-bottom:12px;text-align:center}
+#alur .lanes{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#alur .lane{border:1px dashed var(--wait);border-radius:12px;padding:8px;font-size:.78rem;line-height:1.3;text-align:center;background:var(--node)}#alur .lane b{display:block;font-size:.88rem;color:var(--text);margin-bottom:2px}#alur .lane i{display:block;font-style:normal;color:var(--work);margin-top:4px}
+#alur .box{width:min(100%,420px);background:var(--node);border:1px solid var(--wait);border-radius:12px;padding:9px 12px;text-align:center;font-size:.88rem;line-height:1.3;position:relative}
+#alur .box .n,#alur .dia .n{display:inline-block;min-width:1.6em;height:1.6em;line-height:1.6em;border-radius:50%;background:var(--wait);color:#0f0f0f;font-size:.78rem;margin-right:6px}
+#alur .box small{display:block;font-size:.74rem;opacity:.72;margin-top:2px}
+#alur .dia{width:min(100%,300px);padding:18px 26px;text-align:center;font-size:.84rem;line-height:1.3;background:var(--work);color:#0f0f0f;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);min-height:92px;display:flex;align-items:center;justify-content:center}
+#alur .dia .n{background:#0f0f0f;color:var(--work)}
+#alur .ar{color:var(--line);font-size:1.15rem;line-height:1;padding:3px 0}
+#alur .br{width:100%;display:grid;gap:8px;margin:2px 0}#alur .br.c3{grid-template-columns:repeat(3,minmax(0,1fr))}#alur .br.c2{grid-template-columns:repeat(2,minmax(0,1fr))}#alur .br.c5{grid-template-columns:repeat(5,minmax(0,1fr))}
+#alur .chip{border:1px solid var(--line);border-radius:10px;padding:7px 6px;font-size:.76rem;line-height:1.3;text-align:center;background:var(--node);display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:flex-start}
+#alur .chip .t{font-size:.8rem;color:var(--text)}
+#alur .stop{border:2px solid var(--fail);color:var(--fail);border-radius:8px;padding:4px 6px;font-size:.76rem}
+#alur .go{border:1px solid var(--done);color:var(--done);border-radius:8px;padding:4px 6px;font-size:.76rem}
+#alur .loop{border:1px dashed var(--work);color:var(--work);border-radius:8px;padding:4px 6px;font-size:.76rem}
+#alur .chip.merah{border-color:var(--fail)}#alur .chip.hijau{border-color:var(--done)}#alur .chip.mati{border-color:#777}
+#alur .done{border:2px solid var(--done);color:var(--done);border-radius:28px;padding:8px 22px;font-size:.92rem;background:var(--node)}
+#alur .rule{width:100%;margin-top:14px;font-size:.72rem;opacity:.65;text-align:center}
+@media(max-width:560px){#alur .lanes,#alur .br.c3,#alur .br.c5{grid-template-columns:minmax(0,1fr)}#alur .br.c2{grid-template-columns:minmax(0,1fr)}}
+</style>
 </head>
 <body>
 <h1>Kantor Live</h1><div id="info">memuat...</div>
@@ -58,6 +80,59 @@ main{width:100%;max-width:680px;min-width:0;display:flex;flex-direction:column;a
   </section>
 </main>
 <ul id="log"></ul>
+<section id="alur" aria-label="Alur Perusahaan">
+  <h2>Alur Perusahaan</h2><div class="sub0">hulu → hilir → eksekusi → laporan balik · hanya peran, status, kode, jam</div>
+  <div class="lanes">
+    <div class="lane"><b>Jalur A · Boss</b>chat, WhatsApp, atau voice note ke Jeff<i>→ langkah 1</i></div>
+    <div class="lane"><b>Jalur B · pesan luar</b>Telegram bot, AppSheet, Gmail, cron: Hermes jadi pintu depan, memilah<i>→ langkah 6</i></div>
+    <div class="lane"><b>Jalur C · terjadwal</b>08:00 briefing pagi · 18:00 pengingat · 20:05 check-in WhatsApp · 23:00 ringkasan malam + audit · tgl 1 bulanan<i>Jeff eksekusi, lapor via Telegram</i></div>
+  </div>
+  <div class="ar" aria-hidden="true">↓ jalur A</div>
+  <div class="box"><span class="n">1</span>Boss (CEO) memerintah Jeff (Chief of Staff, Muse)<small>lewat chat, WhatsApp, atau voice note</small></div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="box" id="alur-2"><span class="n">2</span>Jeff membuat rencana (Plan Mode)<small>cek resource seperlunya, berhenti kalau sudah cukup</small></div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="box"><span class="n">3</span>Jeff lapor rencana ke Boss, Boss cek</div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="dia" id="alur-4"><div><span class="n">4</span>Keputusan<br>MERAH / MATI / HIJAU-KUNING?</div></div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="br c3">
+    <div class="chip mati"><span class="t">MATI</span><span class="stop">STOP · jangan dikerjakan</span></div>
+    <div class="chip merah"><span class="t">MERAH</span><span>masuk Antrean Persetujuan, tunggu "1 acc, 2 tolak" dari Boss</span><span class="stop">tolak: STOP</span><span class="go">acc: lanjut ke 5</span></div>
+    <div class="chip hijau"><span class="t">HIJAU / KUNING</span><span class="go">lanjut ke 5</span></div>
+  </div>
+  <div class="ar" aria-hidden="true">↓ lanjut</div>
+  <div class="box"><span class="n">5</span>Jeff menulis tugas ke Kotak Surat<small>Hermes memasukkannya ke Papan Status (kode Q)</small></div>
+  <div class="ar" aria-hidden="true">↓ &nbsp;<span style="font-size:.74rem">(jalur B masuk di sini)</span></div>
+  <div class="box"><span class="n">6</span>Hermes (calon CEO, orkestrator 24 jam) routing</div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="br c5">
+    <div class="chip"><span class="t">ringan / rutin</span>subagen</div>
+    <div class="chip"><span class="t">bangun / perbaiki sistem</span>Claude Code (CTO)</div>
+    <div class="chip"><span class="t">nilai / analisis angka</span>Mrs.Plan (CFO)</div>
+    <div class="chip"><span class="t">jurnal / review / konten</span>Mrs.Secretary</div>
+    <div class="chip"><span class="t">judgement berat</span><span class="loop">↩ balik ke Jeff</span></div>
+  </div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="box"><span class="n">7</span>Eksekusi oleh yang ditunjuk<small>yang membangun tidak menilai angka · yang menilai tidak mengubah sistem</small></div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="dia" id="alur-8"><div><span class="n">8</span>Keputusan MERAH baru<br>di tengah jalan?</div></div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="br c2">
+    <div class="chip"><span class="t">ya</span><span class="loop">↩ balik ke langkah 4 (Antrean Persetujuan)</span></div>
+    <div class="chip"><span class="t">tidak</span><span class="go">lanjut ke 9</span></div>
+  </div>
+  <div class="ar" aria-hidden="true">↓ lanjut</div>
+  <div class="box"><span class="n">9</span>Laporan balik naik<small>pelaksana → Hermes (Kotak + Papan Status, dengan bukti) → Jeff → Boss</small></div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="dia" id="alur-10"><div><span class="n">10</span>Boss revisi?</div></div>
+  <div class="ar" aria-hidden="true">↓</div>
+  <div class="br c2">
+    <div class="chip"><span class="t">ya</span><span class="loop">↩ balik ke langkah 2</span></div>
+    <div class="chip"><span class="t">tidak</span><span class="done">Selesai</span></div>
+  </div>
+  <div class="rule">Pagar privasi berlaku: halaman ini hanya menampilkan peran, status, kode tugas, dan jam.</div>
+</section>
 <script type="module">
 const REPO="Badakonline/kevinco-hq-live";
 const PREVIEW=new URLSearchParams(location.search).has("preview");
